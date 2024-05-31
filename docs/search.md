@@ -15,7 +15,7 @@ nav_order: 7
 
 ---
 
-Just the Docs uses [lunr.js](http://lunrjs.com) to add a client-side search interface powered by a JSON index that Jekyll generates.
+Just the Docs uses [lunr.js](https://lunrjs.com) to add a client-side search interface powered by a JSON index that Jekyll generates.
 All search results are shown in an auto-complete style interface (there is no search results page).
 By default, all generated HTML pages are indexed using the following data points:
 
@@ -93,6 +93,21 @@ The search button displays in the bottom right corner of the screen and triggers
 # Supports true or false (default)
 search.button: true
 ```
+
+### Focus search bar with a keyboard shortcut
+
+Just the Docs supports focusing the search bar input with a keyboard shortcut. After setting the `search.focus_shortcut_key` config item key, users who press <kbd>Ctrl</kbd> + `search.focus_shortcut_key` (or on macOS, <kbd>Command</kbd> + `search.focus_shortcut_key`) will focus the search bar.
+
+Note that this feature is **disabled by default**. `search.focus_shortcut_key` should be a [valid value from `KeyboardEvent.key`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key); this involves all ASCII alphanumeric values, as well as modifier keys.
+
+For example,
+
+```yaml
+search:
+    focus_shortcut_key: 'k'
+```
+
+Will make <kbd>Ctrl</kbd> + <kbd>K</kbd> focus the search bar for Windows users (and <kbd>Command</kbd> + <kbd>K</kbd> on macOS).
 
 ## Hiding pages from search
 

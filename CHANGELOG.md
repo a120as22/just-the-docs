@@ -15,16 +15,299 @@ The project underwent a major maintenance shift in March 2022.
 {: .note }
 This website is built from the `HEAD` of the `main` branch of the theme repository.
 
-{: .warning }
-This website includes docs for some new features that are not available in `v0.5.2`!
-
 Code changes to `main` that are *not* in the latest release:
 
-- N/A
+- Added: `nav_enabled` site, layout, and page-level variable to selectively show or hide the side/mobile menu by [@kevinlin1] in [#1441]. The minimal layout was reimplemented using this feature, and now has support for the site-wide search bar and auxiliary links.
+- Fixed: protect `search-data.json` file from front matter default for layout by [@mattxwang] in [#1468]
 
-Docs changes in `main` that are *not* in the latest release:
+Docs changes made since the latest release:
 
-- N/A
+- Docs: Explained the `nav_enabled` variables as an alternative to using the minimal layout [@kevinlin1] in [#1441].
+
+[#1468]: https://github.com/just-the-docs/just-the-docs/pull/1468
+
+## Release v0.8.2
+
+Hi everyone! This patch release fixes a bug where a default layout with unrestricted `scope` (`path: ""`) breaks JavaScript functionality. Users who do not use a default layout with unrestricted `scope` should not be affected. This should be a straightforward upgrade for all users. Thank you to [@pdmosses] for triaging and fixing the bug!
+
+### Bugfixes
+
+- Fixed: Protect theme JS file from front matter default for layout by [@pdmosses] in [#1447]
+
+[#1447]: https://github.com/just-the-docs/just-the-docs/pull/1447
+
+## Release v0.8.1
+
+Hi folks! This patch release fixes a bug introduced in `0.8.0` that affects users who build their sites in strict mode. It is a straightforward upgrade that should require no manual migration changes. Thank you to [@Zarthus] for quickly catching and fixing this bug!
+
+### Bugfixes
+
+- Fixed: Liquid filter typo in breadcrumb component (`strip` instead of `trim`) by [@Zarthus] in [#1434]
+
+### Documentation
+
+- Build docs site using strict mode and `strict_filters` by [@Zarthus] in [#1435]
+
+### New Contributors
+
+- [@Zarthus] made their first contribution in [#1434]
+
+[@Zarthus]: https://github.com/Zarthus
+
+[#1434]: https://github.com/just-the-docs/just-the-docs/pull/1434
+[#1435]: https://github.com/just-the-docs/just-the-docs/pull/1435
+
+## Release v0.8.0
+
+Hi folks! This first minor release of 2024 has a short number of changes: a large improvement of build times for large sites, a new keyboard shortcut to focus the search bar, and sidebar navigation bugfixes for "pretty" URLs (with `.html` omitted) and the clickable area on Safari. This release has no explicit breaking changes and should be a straightforward upgrade for most (if not all) users.
+
+### Using Release `v0.8.0`
+
+Users who have not pinned the theme version will be **automatically upgraded to `v0.8.0` the next time they build their site**.
+
+To use this release explicitly as a remote theme:
+
+```yml
+remote_theme: just-the-docs/just-the-docs@v0.8.0
+```
+
+To use this version explicitly as a gem-based theme, pin the version in your `Gemfile` and re-run `bundle install` or `bundle update just-the-docs`:
+
+```ruby
+gem "just-the-docs", "0.8.0"
+```
+
+To use and pin a previous version of the theme, replace the `0.8.0` with the desired release tag.
+
+### New Features
+
+- Added: configurable keyboard shortcut to focus search input by [@kcromanpl-bajra] in [#1411]
+
+### Bugfixes
+
+- Fixed: quicker build by [@pdmosses] in [#1397]
+- Fixed: incorrect navigation when `.html` omitted from URL by [@pdmosses] in [#1374]
+- Fixed: incorrect positioning of clickable area for navigation links on Safari by [@mattxwang] in [#1403]
+
+### Documentation
+
+- Add documentation to "Navigation Structure" on grouping pages with collections by [@mitchnemirov] in [#1390]
+
+### New Contributors
+
+- [@mitchnemirov] made their first contribution in [#1390]
+- [@kcromanpl-bajra] made their first contribution in [#1411]
+
+[@mitchnemirov]: https://github.com/mitchnemirov
+[@kcromanpl-bajra]: https://github.com/kcromanpl-bajra
+
+[#1374]: https://github.com/just-the-docs/just-the-docs/pull/1374
+[#1390]: https://github.com/just-the-docs/just-the-docs/pull/1390
+[#1397]: https://github.com/just-the-docs/just-the-docs/pull/1397
+[#1403]: https://github.com/just-the-docs/just-the-docs/pull/1403
+[#1411]: https://github.com/just-the-docs/just-the-docs/pull/1411
+
+## Release v0.7.0
+
+Hi folks! This is a minor release that adds a new configuration option for opening external links in a new tab and provides many bugfixes (in both correctness and performance) for Just the Docs users with large sites. We anticipate that for most users, this is a straightforward upgrade. However, it introduces some potentially-breaking *internal* changes to undocumented features of the theme.
+
+### Migrating to `v0.7.0`
+
+**Migration**: users will need to migrate if:
+
+- they overrode `_includes/nav.html`, which has moved to `_includes/components/nav.html`
+- they have an element with the IDs `jtd-nav-activation` or `jtd-head-nav-stylesheet`
+
+For more, refer to the [migration guide](https://just-the-docs.com/MIGRATION/).
+
+### Using Release `v0.7.0`
+
+Users who have not pinned the theme version will be **automatically upgraded to `v0.7.0` the next time they build their site**.
+
+To use this release explicitly as a remote theme:
+
+```yml
+remote_theme: just-the-docs/just-the-docs@v0.7.0
+```
+
+To use this version explicitly as a gem-based theme, pin the version in your `Gemfile` and re-run `bundle install` or `bundle update just-the-docs`:
+
+```ruby
+gem "just-the-docs", "0.7.0"
+```
+
+To use and pin a previous version of the theme, replace the `0.7.0` with the desired release tag.
+
+### New Features
+
+- Added: configuration options for opening external links in new tab by [@CarbonNeuron] in [#1360]
+
+### Bugfixes
+
+- Fixed: remove href from the navigation link to the current page by [@pdmosses] in [#1356]
+- Fixed: improve build time by [@pdmosses] in [#1358]
+- Fixed: erroneous parentheses in `site_nav` conditional by [@mattxwang] in [#1366]
+- Fixed: navigation scroll to active link regression by [@pdmosses] in [#1367]
+- Fixed: invalid CSS rules in head elements by [@pdmosses] in [#1368]
+- Fixed: accidental disabling of forward-declared stylesheets by [@mattxwang] in [#1373]
+
+{: .warning }
+[#1358] moved `_includes/nav.html` to the `_includes/components` directory,
+Users who were overriding that file will need to adjust their sites accordingly.
+
+### Documentation:
+
+- Docs: fix typos in `CHANGELOG` and `MIGRATION` by [@thapasusheel] in [#1377]
+
+### New Contributors
+
+- [@CarbonNeuron] made their first contribution in [#1360]
+- [@thapasusheel] made their first contribution in [#1377]
+
+[@CarbonNeuron]: https://github.com/CarbonNeuron
+[@thapasusheel]: https://github.com/thapasusheel
+
+[#1356]: https://github.com/just-the-docs/just-the-docs/pull/1356
+[#1358]: https://github.com/just-the-docs/just-the-docs/pull/1358
+[#1360]: https://github.com/just-the-docs/just-the-docs/pull/1360
+[#1366]: https://github.com/just-the-docs/just-the-docs/pull/1366
+[#1367]: https://github.com/just-the-docs/just-the-docs/pull/1367
+[#1368]: https://github.com/just-the-docs/just-the-docs/pull/1368
+[#1373]: https://github.com/just-the-docs/just-the-docs/pull/1373
+[#1377]: https://github.com/just-the-docs/just-the-docs/pull/1377
+
+## Release v0.6.2
+
+Hi all, this is a small patch release that includes two changes: adding a missing Windows emoji font fallback, and removing some (now-unused) code introduced in 0.6.
+
+### Bugfixes
+
+- Fixed: Windows emoji font fallback by [@flanakin] in [#1337]
+- Removed: unused `.passive` toggle in navigation by [@pdmosses] in [#1335]
+
+[#1335]: https://github.com/just-the-docs/just-the-docs/pull/1335
+[#1337]: https://github.com/just-the-docs/just-the-docs/pull/1337
+
+### New Contributors
+
+- [@flanakin] made their first contribution in [#1337]
+
+[@flanakin]: https://github.com/flanakin
+
+## Release v0.6.1
+
+Hi all, this is a small patch release that only includes one change: resolving a bug introduced in 0.6.0 that causes a JS error for pages excluded from navigation.
+
+### Bugfixes
+
+- Fixed: JS error for pages excluded from navigation by [@pdmosses] in [#1332]
+
+[#1332]: https://github.com/just-the-docs/just-the-docs/pull/1332
+
+## Release v0.6.0
+
+Hi all, this is a minor release that introduces performance improvements for build times on large sites, correctly sets the `color-scheme` property, and fixes invalid HTML. However, it introduces some potentially-breaking *internal* changes to undocumented features of the theme.
+
+### Migrating to `v0.6.0`
+
+**Migration**: users will need to migrate if:
+
+- they have an existing `_includes` file named `favicon.html`, `head_nav.html`, or `css/activation.scss.liquid`
+- they have code that refers to `#main-content-wrap`
+- they override the default `light` theme's code, or the theme-loading logic
+- they have different favicons for different pages
+
+For more, refer to the [migration guide](https://just-the-docs.com/MIGRATION/).
+
+### Using Release `v0.6.0`
+
+Users who have not pinned the theme version will be **automatically upgraded to `v0.6.0` the next time they build their site**.
+
+To use this release explicitly as a remote theme:
+
+```yml
+remote_theme: just-the-docs/just-the-docs@v0.6.0
+```
+
+To use this version explicitly as a gem-based theme, pin the version in your `Gemfile` and re-run `bundle install` or `bundle update just-the-docs`:
+
+```ruby
+gem "just-the-docs", "0.6.0"
+```
+
+To use and pin a previous version of the theme, replace the `0.6.0` with the desired release tag.
+
+### New Features and Bugfixes
+
+- Added: `$color-scheme` theme variable to specify `color-scheme` for `:root` by [@sigv] in [#1280]
+- Fixed: build times for large sites by [@pdmosses] in [#1244]
+- Fixed: missing closing `</button>` tag in `sidebar.html` by [@mattxwang] in [#1304]
+- Fixed: removed duplicate `#main-content-wrap` minimal and default layouts by [@mattxwang] in [#1305]
+
+### Documentation
+
+{: .warning }
+The theme docs are unversioned, and already reflect the above changes.
+
+Docs changes:
+
+- A [footnote]({% link docs/configuration.md %}#fn:js-disabled) in the configuration docs explains how disabling JavaScript affects the display of navigation links when browsing folded collections.
+- Invalid HTML has been removed from most documentation examples.
+
+### New Contributors
+
+- [@sigv] made their first contribution in [#1280]
+
+[@sigv]: https://github.com/sigv
+[#1244]: https://github.com/just-the-docs/just-the-docs/pull/1244
+[#1280]: https://github.com/just-the-docs/just-the-docs/pull/1280
+[#1304]: https://github.com/just-the-docs/just-the-docs/pull/1304
+[#1305]: https://github.com/just-the-docs/just-the-docs/pull/1305
+
+## Release v0.5.4
+
+Hi all, this is a small patch release that only includes one change: fixing a style clash between Mermaid's labels and Just the Docs' labels.
+
+*Note: for subsequent patch releases, we will omit migration instructions (for brevity). In all cases, immediate migration should be backwards-compatible. Refer to previous major or minor update instructions for more information.*
+
+### Bugfixes
+
+- Fixed: Mermaid labels inheriting theme `.label` styling by [@mattxwang] in [#1278]
+
+[#1278]: https://github.com/just-the-docs/just-the-docs/pull/1278
+
+## Release v0.5.3
+
+Hi all, this is a minor patch release that only includes one change: changing all text-based CSS properties to use `rem` instead of hard-coded `px` values. This has two effects:
+
+1. All deprecation warnings are now fixed on build; you should now get a clean build with `jekyll build`.
+2. We have **deprecated the `$root-font-size` SCSS variable**. We will remove it in an upcoming release of the theme.
+
+If you use the stock Just the Docs theme, this release should have no impact on your final built site. If you change the `$root-font-size` SCSS variable, you might experience light layout shifts.
+
+### Using Release `v0.5.3`
+
+Users who have not pinned the theme version will be **automatically upgraded to `v0.5.3` the next time they build their site**.
+
+To use this release explicitly as a remote theme:
+
+```yml
+remote_theme: just-the-docs/just-the-docs@v0.5.3
+```
+
+To use this version explicitly as a gem-based theme, pin the version in your `Gemfile` and re-run `bundle install` or `bundle update just-the-docs`:
+
+```ruby
+gem "just-the-docs", "0.5.3"
+```
+
+To use and pin a previous version of the theme, replace the `0.5.3` with the desired release tag.
+
+### Bugfixes
+
+- Fixed: font-size scaling for text-related CSS properties by using `rem` instead of fixed `px` values; deprecate `$root-font-size` by [@mattxwang] in [#1169]
+
+[#1169]: https://github.com/just-the-docs/just-the-docs/pull/1169
 
 ## Release v0.5.2
 
@@ -518,7 +801,7 @@ This RC does not introduce any major user-facing features. It adds more customiz
 
 ### Trying out pre-release `v0.4.0.rc5`
 
-Simlar to the prior release, `v0.4.0.rc5` is a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` following immediately after. While we don't anticipate many users using this RC, it is still possible to opt-in.
+Similar to the prior release, `v0.4.0.rc5` is a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` following immediately after. While we don't anticipate many users using this RC, it is still possible to opt-in.
 
 To use this RC explicitly as a remote theme:
 
@@ -619,7 +902,7 @@ Have any questions, thoughts, or concerns? We'd love to hear from you! Please [o
 
 ### Trying out pre-release `v0.4.0.rc4`
 
-Simlar to the prior release, `v0.4.0.rc4` is a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` coming soon. We want your help in testing the changes! As of now, the gem on RubyGems and the repository are updated to `v0.4.0.rc4`.
+Similar to the prior release, `v0.4.0.rc4` is a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` coming soon. We want your help in testing the changes! As of now, the gem on RubyGems and the repository are updated to `v0.4.0.rc4`.
 
 To use this RC explicitly as a remote theme:
 
@@ -740,7 +1023,7 @@ As soon as we get stable test results from major downstream users, we'll push ou
 
 ### Trying out pre-release `v0.4.0.rc3`
 
-Simlar to the prior release, `v0.4.0.rc3` is a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` coming soon. We want your help in testing the changes! As of now, the gem on RubyGems and the repository are updated to `v0.4.0.rc3`.
+Similar to the prior release, `v0.4.0.rc3` is a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` coming soon. We want your help in testing the changes! As of now, the gem on RubyGems and the repository are updated to `v0.4.0.rc3`.
 
 To use this RC explicitly as a remote theme:
 
@@ -816,7 +1099,7 @@ The intention of this release candidate is to gather even more feedback on a pot
 
 ### Trying out pre-release `v0.4.0.rc2`
 
-Simlar to the prior release, `v0.4.0.rc2` is a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` coming soon. We want your help in testing the changes! As of now, the gem on RubyGems and the repository are updated to `v0.4.0.rc2`.
+Similar to the prior release, `v0.4.0.rc2` is a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` coming soon. We want your help in testing the changes! As of now, the gem on RubyGems and the repository are updated to `v0.4.0.rc2`.
 
 To use this RC explicitly as a remote theme:
 
@@ -904,7 +1187,7 @@ We want your feedback! Are these changes helpful? Are our docs easy to understan
 
 ### Trying out pre-release `v0.4.0.rc1`
 
-Due to the massive scope of these changes, we're making `v0.4.0.rc1` avaialble as a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` coming soon. We want your help in testing the changes! As of now, the gem on RubyGems and the repository are updated to `v0.4.0.rc1`.
+Due to the massive scope of these changes, we're making `v0.4.0.rc1` available as a **release candidate** for the theme (i.e., a pre-release) with release `v0.4.0` coming soon. We want your help in testing the changes! As of now, the gem on RubyGems and the repository are updated to `v0.4.0.rc1`.
 
 To use this RC explicitly as a remote theme:
 
@@ -1416,7 +1699,7 @@ fixes #291 #256 #293 #177
 
 ## v0.2.1
 
-This update fixes security vulnerablities in the lodash sub-dependency and bumps other dev dependencies to their latest version.
+This update fixes security vulnerabilities in the lodash sub-dependency and bumps other dev dependencies to their latest version.
 
 ## v0.2.0
 
